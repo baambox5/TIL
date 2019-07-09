@@ -2,7 +2,8 @@ import  requests
 from bs4 import BeautifulSoup
 
 # 1. 원하는 주소로 요청을 보내 응답을 저장한다.
-html = requests.get('https://www.naver.com/').text
+url = 'https://www.naver.com/'
+html = requests.get(url).text
 #print(type(html))
 # 2. 정보를 조작하기 편하게 바꾸고
 soup = BeautifulSoup(html, 'html.parser')
@@ -16,3 +17,5 @@ name = soup.select('#PM_ID_ct > div.header > div.section_navbar > div.area_hotke
 # 4. 출력한다.
 for i in search:
     print(i.text)
+
+# 커밋을 확인하기 위한 주석
