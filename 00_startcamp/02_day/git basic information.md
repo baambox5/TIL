@@ -85,7 +85,7 @@ commit이 제대로 되었는지 확인
 
 ($ git remote add origin https://github.com/baambox5/TIL.git
 
-git홈페이지에서 가져올 것, 한번만)
+git홈페이지에서 가져올 것, 한번만(repository만들때))
 
 
 
@@ -178,3 +178,12 @@ $ git clone 주소(github홈페이지에서 얻을 수 있음)
 
 
 - 선택 참고사이트 : gitignore.io 로 접속해서 필요한 언어에 맞는 ignore요소를 복붙 가능
+
+
+
+--------
+
+## git에 image파일 올리기
+
+1. PJT파일에 img폴더를 만들어서 같이 올린다. (readme에 경로 수정해서 넣을 것)
+2. github 홈페이지 -> issues -> new issue -> 사진 파일 올리기(마우스드래그로 옮겨넣기도 가능) -> 생기는 주소를 알려주면 된다.(단점은 하나하나 업로드하는데 걸리는 시간)
