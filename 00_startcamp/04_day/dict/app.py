@@ -34,17 +34,24 @@ def lotto_result():
     for num in numbers:
         if num in winner:
             matched += 1
-    if matched == 6:
-        result = '1등입니다!'
-    elif matched == 5:
-        if lotto['bnusNo'] in numbers:
-            result = '2등입니다!'
+
+    # 좀 더 짧은 코드(위의 for문 3줄을 아래 한 줄로 만들 수 있다.)
+    matched = len(set(winner) & set(numbers))
+
+    if len(numbers) == 6:
+        if matched == 6:
+            result = '1등입니다!'
+        elif matched == 5:
+            if lotto['bnusNo'] in numbers:
+                result = '2등입니다!'
+            else:
+                result = '3등입니다!'
+        elif matched == 4:
+            result = '4등입니다!'
+        elif matched == 3:
+            result = '5등입니다!'
         else:
-            result = '3등입니다!'
-    elif matched == 4:
-        result = '4등입니다!'
-    elif matched == 3:
-        result = '5등입니다!'
+            result = '꽝입니다!'
     else:
-        result = '꽝입니다!'
+        result = '번호가 6개가 아닙니다.'
     return render_template('lotto_result.html', winner=winner, numbers=numbers, result=result)

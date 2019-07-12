@@ -53,6 +53,12 @@ for person_score in scores.values():
 
 avg_score = total_score / count
 print(avg_score)
+
+# 2 좀 더 짧은 코드
+# avg_score = list(map(lambda d: sum(d.values()) / len(d), scores.values()))
+# result = sum(avg_score) / len(avg_score)
+# print(result)
+
 #
 
 # 3. 도시별 최근 3일의 온도입니다.
