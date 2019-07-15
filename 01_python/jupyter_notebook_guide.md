@@ -75,7 +75,7 @@
 
 - 일정한 고정폭, Sans-serif(I와 l, O와 0을 비교하기 편해야 한다.), 가독성과 명확한 구분을 위해서
 
-- Source Code Pro, Monaco, HACK, Dejavu sans mono 등이 유명하다
+- Source Code Pro, Monaco, HACK, Dejavu sans mono, Fira Code 등이 유명하다
 
   > C:\Windows\Fonts\ 에 설치했던 것을 복붙할 것.
   >
