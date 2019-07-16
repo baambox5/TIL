@@ -47,7 +47,7 @@
 
 - token 및 id 가리는 방법
 
-  > pip install python-decouple
+  > $ pip install python-decouple
   >
   > 코드에 from decouple import config 추가
 
