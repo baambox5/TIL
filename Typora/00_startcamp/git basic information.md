@@ -8,6 +8,12 @@ nth child와 같은 특이한 요소 잘 확인할 것.
 
 
 
+- 자리 이동시
+
+  > 검색 -> '자격' -> git 관련 삭제
+
+
+
 # git
 
 - SCM - Source Code Management
@@ -56,6 +62,12 @@ $ git config --global --list
 원하는 폴더(최상위)로 이동한 뒤에 입력(맨 처음 단 한번만 할 것)
 
 나중에 git 안에 git이 생기면 충돌로 데이터 날아갈 수 있음)
+
+
+
+- git init으로 생긴 파일 지우기
+
+> $ rm -rf .git
 
 
 
