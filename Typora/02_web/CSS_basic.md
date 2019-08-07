@@ -132,5 +132,38 @@ Cascading Style Sheet
 
 
 
+- z-index : 값이 클수록 우선순위가 높다.
 
 
+
+## position
+
+#### static
+
+- 그냥 평소에 하던 것같이 지정된 위치(기본은 좌상단부터 시작)
+
+
+
+#### relative
+
+- static일때를 기준으로 위치 선정
+
+
+
+#### absolute
+
+- static을 제외한 부모 요소의 위치를 기준으로 선정
+- 모든 부모가 static인 경우 기준을 body로 선정
+- 흔히 집 나간 자식이라고 부름(static 부모와 상관없이 움직이기 때문에)
+
+
+
+#### fixed
+
+- 부모 요소에 상관없이 고정된 위치
+
+
+
+##### Wappalyzer
+
+- 홈페이지들이 어떤 개발도구로 개발되었는지 파악하는 chrome extension
