@@ -31,15 +31,17 @@
 
 > $ python -m venv venv (venv라는 것으로 가상환경을 만듬)
 >
-> $ source venv/Scripts/activate => (실행)
->
 > $ python -m pip install --upgrade pip => (pip update)
+
+- 가상환경 실행 및 종료
+
+> $ source venv/Scripts/activate => (실행)
 >
 > $ deactivate => (종료)
 
 
 
-- vs code에서 설정
+- ##### vs code에서 설정
 
 > f1또는 ctr+shift+p에서 interpreter 검색
 >
@@ -52,6 +54,8 @@
 > shortcut 검색 => integrate => terminal.newInActiveWorkspace 에 ctr+` 넣기
 
 
+
+#### django 설정 
 
 - django 설치
 
@@ -111,12 +115,12 @@
 
 - ##### 앱 생성 후 등록
 
-  - settings.py에서 INSTALLED_APPS에 'pages', (제한될 가능성) 혹은 'pages.contrib.PagesConfig', (정식 등록)를 추가. trailing comma(',')가 하나라도 붙어 있는게 convention
+  - settings.py에서 INSTALLED_APPS에 'pages', (제한될 가능성) 혹은 'pages.contrib.PagesConfig', (정식 등록)를 추가. 코드가 한줄이라도 trailing comma(',')가 붙어 있는게 convention
   - app 등록 순서
     	1. local apps
-     	2. Third party apps
-     	3. Django apps
-  - Internationalization == I18n으로 보통 단축해서 말함
+     2. Third party apps
+     3. Django apps
+  - 'Internationalization'는 'I18n'으로 단축해서 말하기도 함.
   - Timezone이 약속되어 있다.
   - USE_TZ이 True로 되어 있으면, 접속자의 위치에 맞는 시간을 설정해준다. (왠만하면 건들지 말 것)
 
@@ -209,23 +213,19 @@
   - forloop는 DTL for문 안에서 자동으로 생기는 객체
 
     > <h3>1. 반복문</h3>
-    >
-    > {% for menu in menus %}
-    >
-    > <p>{{ menu }}</p>
-    >
+    >{% for menu in menus %}
+    > 
+    ><p>{{ menu }}</p>
     > {% endfor %} => 꼭 닫아줄 것.
-
+    
     > {% for user in empty_list %}
-    >
+>
     > <p>{{ user }}</p>
-    >
-    > {% empty %} <!-- 비어있으면, 아래쪽이 실행, 그렇지 않으면 위쪽이 실행 -->
-    >
-    > <p>현재 가입된 유저가 없습니다.</p>
-    >
+    >{% empty %} <!-- 비어있으면, 아래쪽이 실행, 그렇지 않으면 위쪽이 실행 -->
+    > 
+    ><p>현재 가입된 유저가 없습니다.</p>
     > {% endfor %}
-
+    
   - <=, >=, ==, !=, >, <, in, not in, is 모두 사용 가능
-
+  
   - 이미 정의되어 있는 변수 호출은 {% %}를 사용한다.
