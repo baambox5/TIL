@@ -65,7 +65,7 @@
 
 > $ python -m django --version
 
-- django 프로젝트 만들기
+- **django 프로젝트 만들기**
 
 > $ django-admin startproject django_intro .
 >
@@ -225,7 +225,7 @@
     > 
     ><p>현재 가입된 유저가 없습니다.</p>
     > {% endfor %}
-    
+
   - <=, >=, ==, !=, >, <, in, not in, is 모두 사용 가능
   
   - 이미 정의되어 있는 변수 호출은 {% %}를 사용한다.
