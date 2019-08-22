@@ -104,6 +104,10 @@
 
 > $ python manage.py showmigrations
 
+- migrate하기
+
+> $ python manage.py migrate
+
 
 
 - vs code에서 sqlite보기
@@ -399,6 +403,8 @@ The Django admin site : https://docs.djangoproject.com/en/2.2/ref/contrib/admin/
 5. list_per_page
 
    - 한 페이지에 표시되는 항목 수를 제어(기본값 100)
+
+> $ python manage.py createsuperuser
 
 
 
