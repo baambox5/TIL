@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-  <img src="{% static 'articles/images/cat.jpg' %}" alt="sample_img">
   <h1 class="text-center">Articles</h1>
   <a href="{% url 'articles:create' %}">[CREATE]</a>
   <hr>

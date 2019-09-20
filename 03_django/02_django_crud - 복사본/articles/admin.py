@@ -7,7 +7,7 @@ from .models import Article, Comment
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'content', 'image', 'created_at', 'updated_at',)
+    list_display = ('pk', 'title', 'content', 'created_at', 'updated_at',)
     # list_display = get_all_fields(Article)
 admin.site.register(Article, ArticleAdmin)
 
