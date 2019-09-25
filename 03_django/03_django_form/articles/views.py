@@ -1,7 +1,7 @@
 from IPython import embed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
-from django.forms import inlineformset_factory
+from django.forms import ModelChoiceField
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 
@@ -65,7 +65,9 @@ def commentcreate(request, article_pk):
     if request.method == 'POST':
         comments = CommentForm(request.POST)
         if comments.is_valid():
-            comments.save()
+            new = comments.save(commit=False)
+            new.article = article
+            new.save()
             return redirect(article)
     else:
         comments = CommentForm()
