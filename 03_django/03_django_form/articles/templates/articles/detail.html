@@ -11,24 +11,27 @@
   <p>{{ article.updated_at|date:"SHORT_DATE_FORMAT" }}</p>
   <hr>
   <hr>
-  {% if comments %}
-    {% for comment in comments %}
+  {% for comment in comments %}
       <p>{{ comment.updated_at }}</p>
-      <p>{{ comment.content }}</p>
+      <p><b>{{ forloop.revcounter }}.</b> {{ comment.content }}</p>
+      <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_button "Delete" button_type="submit" button_class="btn-warning" %}
+      </form>
       <hr>
     {% endfor %}
-  {% endif %}
-  <form action="{% url 'articles:commentcreate' article.pk %}" method="POST">
+  <form action="{% url 'articles:comments' article.pk %}" method="POST">
     {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons submit='OK' reset="Reset" %}{% endbuttons %}
+    {% bootstrap_form comment_form %}
+    {% buttons submit='Submit' reset="Reset" %}{% endbuttons %}
   </form>
-  <a href="{% url 'articles:index' %}">[BACK]</a>
   <hr>
+  <hr>
+  <a href="{% url 'articles:index' %}">[BACK]</a>
   <a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
   <hr>
   <form action="{% url 'articles:delete' article.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="DELETE">
+    {% bootstrap_button "Delete" button_type="submit" button_class="btn-danger" %}
   </form>
 {% endblock content %}

@@ -1,6 +1,7 @@
 from IPython import embed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
+from django.views.decorators.http import require_POST
 from django.forms import ModelChoiceField
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
@@ -33,18 +34,16 @@ def create(request):
 def detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     comments = article.comment_set.all()
-    form = CommentForm()
-    context = {'article': article, 'comments': comments, 'form': form}
+    comment_form = CommentForm()
+    context = {'article': article, 'comments': comments, 'comment_form': comment_form,}
     return render(request, 'articles/detail.html', context)
 
 
+@require_POST
 def delete(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == 'POST':
-        article.delete()
-        return redirect('articles:index')
-    else:
-        return redirect(article)
+    article.delete()
+    return redirect('articles:index')
 
 
 def update(request, article_pk):
@@ -60,15 +59,19 @@ def update(request, article_pk):
     return render(request, 'articles/form.html', context)
 
 
-def commentcreate(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
-    if request.method == 'POST':
-        comments = CommentForm(request.POST)
-        if comments.is_valid():
-            new = comments.save(commit=False)
-            new.article = article
-            new.save()
-            return redirect(article)
-    else:
-        comments = CommentForm()
-    return redirect(article)
+@require_POST
+def comment_create(request, article_pk):    
+    comments = CommentForm(request.POST)
+    if comments.is_valid():
+        # 객체를 create하지만, db에 레코드는 작성하지 않는다.
+        new = comments.save(commit=False)
+        new.article_id = article_pk
+        new.save()
+    return redirect('articles:detail', article_pk)
+
+
+@require_POST
+def comment_delete(request, article_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    comment.delete()
+    return redirect('articles:detail', article_pk)
