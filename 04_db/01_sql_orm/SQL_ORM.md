@@ -191,15 +191,15 @@ TIL
    ```python
    # orm
    >>> user = User.objects.get(pk=101)
->>> user.delete()
+   >>> user.delete()
    ```
    
    ```sql
    -- sql
-   sqlite> DELETE FROM users_user WHERE id=101;
+      sqlite> DELETE FROM users_user WHERE id=101;
    ```
-
-
+   
+   
 
 ---
 
@@ -296,6 +296,8 @@ TIL
    ```python
    # orm
    >>> User.objects.filter(age=30).values() | User.objects.filter(last_name='김').values()
+   
+   >>> User.objects.filter(Q(age=30)|Q(last_name='김')).values()
    ```
 
    ```sql
@@ -326,6 +328,9 @@ TIL
    # orm
    >>> User.objects.filter(country='강원도').values('first_name') & User.objects.filter(last_name='황').values('first_name')
 <QuerySet [{'first_name': '은정'}]>
+   
+   # 은정까지 들어가기
+   >>> User.objects.filter(country='강원도', last_name='황').values('first_name').first().get('first_name')
    ```
    
       ```sql
@@ -345,42 +350,74 @@ TIL
 
 1. 나이가 많은 사람순으로 10명
 
-      ```python
+   ```python
    # orm
+   >>> User.objects.order_by('-age')[:10].values()
    ```
 
       ```sql
    -- sql
+   sqlite> SELECT * FROM users_user ORDER BY age DESC LIMIT 10;
+   id|first_name|last_name|age|country|phone|balance
+   1|정호|유|40|전라북도|016-7280-2855|370
+   4|미경|장|40|충청남도|011-9079-4419|250000
+   28|성현|박|40|경상남도|011-2884-6546|580000
+   53|상훈|홍|40|전라북도|016-7698-6684|550
+   65|민서|송|40|경기도|011-9812-5681|51000
+   26|영식|이|39|경상북도|016-2645-6128|400000
+   55|미경|이|39|경기도|02-6697-3997|890000
+   58|영일|배|39|전라남도|010-3486-8085|280000
+   74|승민|배|39|강원도|010-4833-9657|840
+   82|현지|김|39|충청북도|02-8468-8321|680000
       ```
 
 2. 잔액이 적은 사람순으로 10명
 
-      ```python
+   ```python
    # orm
+   >>> User.objects.order_by('balance')[:10].values()
    ```
 
       ```sql
    -- sql
+   sqlite> SELECT * FROM users_user ORDER BY balance LIMIT 10;
+   id|first_name|last_name|age|country|phone|balance
+   99|우진|성|32|전라북도|010-7636-4368|150
+   48|보람|이|28|강원도|02-2055-4138|210
+   100|재현|김|25|경상북도|016-1252-2316|210
+   5|영환|차|30|충청북도|011-2921-4284|220
+   24|숙자|권|33|경상남도|016-4610-3200|230
+   61|우진|고|15|경상북도|011-3124-1126|300
+   92|미경|박|35|경상북도|010-5203-5705|300
+   46|명자|김|23|전라남도|011-3545-5608|330
+   38|준호|심|28|충청북도|016-6703-7656|340
+   60|은영|김|30|경상북도|02-5110-2334|350
       ```
 
 3. 잔고는 오름차순, 나이는 내림차순으로 10명?
 
       ```python
    # orm
-   ```
-
+   >>> User.objects.order_by('balance', '-age')[:10].values()
+```
+   
    ```sql
    -- sql
+   sqlite> SELECT * FROM users_user ORDER BY
+      ...> balance, age DESC LIMIT 10;
    ```
    
 4. 성, 이름 내림차순 순으로 5번째 있는 사람
 
    ```python
    # orm
-   ```
-
+   >>> User.objects.order_by('-last_name', '-first_name')[4]
+```
+   
       ```sql
    -- sql
+   sqlite> SELECT * FROM users_user ORDER BY last_name DESC, first_name DE
+   SC LIMIT 1 OFFSET 4;
       ```
 
 
@@ -400,50 +437,75 @@ TIL
 
 1. 전체 평균 나이
 
-      ```python
+   ```python
    # orm
+   >>> User.objects.aggregate(average_value=Avg('age'))
+   {'average_value': 28.23}
    ```
 
       ```sql
    -- sql
+   sqlite> SELECT AVG(age) FROM users_user;
+   AVG(age)
+   28.23
       ```
 
 2. 김씨의 평균 나이
 
-      ```python
+   ```python
    # orm
+   >>> User.objects.filter(last_name='김').aggregate(Avg('age'))
+   {'age__avg': 28.782608695652176}
    ```
 
       ```sql
    -- sql
+   sqlite> SELECT AVG(age) FROM users_user WHERE last_name='김';
+   AVG(age)
+   28.7826086956522
       ```
 
 3. 강원도에 사는 사람의 평균 계좌 잔고
 
    ```python
    # orm
+   >>> User.objects.filter(country='강원도').aggregate(average_value=Avg('balance'))
+   {'average_value': 157895.0}
    ```
 
    ```sql
    -- sql
+   sqlite> SELECT AVG(balance) FROM users_user WHERE country='강원도';
+   AVG(balance)
+   157895.0
    ```
 
 4. 계좌 잔액 중 가장 높은 값
 
    ```python
    # orm
+   >>> User.objects.aggregate(Max('balance'))
+   {'balance__max': 1000000}
    ```
 
       ```sql
    -- sql
+   sqlite> SELECT MAX(balance) FROM users_user;
+   MAX(balance)
+   1000000
       ```
 
 5. 계좌 잔액 총액
 
    ```python
    # orm
+   >>> User.objects.aggregate(Sum('balance'))
+{'balance__sum': 14425040}
    ```
-
+   
       ```sql
    -- sql
+   sqlite> SELECT SUM(balance) FROM users_user;
+   SUM(balance)
+   14425040
       ```
