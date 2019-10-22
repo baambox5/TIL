@@ -1,3 +1,4 @@
+import hashlib
 from IPython import embed
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -28,7 +29,9 @@ def create(request):
         form = ArticleForm(request.POST)
         # form 이 유효한지 체크한다.
         if form.is_valid():
-            article = form.save()
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
             return redirect(article)        
     else:
         form = ArticleForm()
@@ -51,19 +54,25 @@ def detail(request, article_pk):
 def delete(request, article_pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=article_pk)
-        article.delete()
+        if request.user == article.user:
+            article.delete()
+        else:
+            return redirect(article)
     return redirect('articles:index')
 
 @login_required
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
-        if form.is_valid():
-            article = form.save()
-            return redirect(article)
+    if request.user == article.user:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, instance=article)
+            if form.is_valid():
+                article = form.save()
+                return redirect(article)
+        else:
+            form = ArticleForm(instance=article)
     else:
-        form = ArticleForm(instance=article)
+        return redirect('articles:index')
     context = {'form': form, 'article': article,}
     return render(request, 'articles/form.html', context)
 
@@ -76,6 +85,7 @@ def comment_create(request, article_pk):
             # 객체를 create하지만, db에 레코드는 작성하지 않는다.
             new = comments.save(commit=False)
             new.article_id = article_pk
+            new.user = request.user
             new.save()
     return redirect('articles:detail', article_pk)
 
@@ -84,6 +94,21 @@ def comment_create(request, article_pk):
 def comment_delete(request, article_pk, comment_pk):
     if request.user.is_authenticated:
         comment = Comment.objects.get(pk=comment_pk)
-        comment.delete()
+        if request.user == comment.user:
+            comment.delete()
         return redirect('articles:detail', article_pk)
     return HttpResponse('You are Unauthorized', status=401)
+
+
+def like(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    if article.like_users.filter(pk=request.user.pk).exists():
+        article.like_users.remove(request.user)
+    else:
+        article.like_users.add(request.user)
+    # 해당 게시글에 좋아요를 누른 사람들 중에서 현재 접속유저가 있다면 좋아요를 취소
+    # if request.user in article.like_users.all():
+    #     article.like_users.remove(request.user) # 좋아요 취소
+    # else:
+    #     article.like_users.add(request.user) # 좋아요
+    return redirect('articles:index')
