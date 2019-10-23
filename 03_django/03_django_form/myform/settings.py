@@ -126,4 +126,4 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 STATIC_URL = '/static/'
 
-# AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'
