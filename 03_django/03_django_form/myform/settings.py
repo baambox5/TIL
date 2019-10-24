@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')o@&kbm6hjls4q&j^-l$6a#)-ll=u+*3_!o4j(1dyz_%*1zb4f'
+SECRET_KEY = '#y#z+rb0c@o8fa2_#vvouf@l7n_b)zbvh0q&)o#5+mo8v77)%r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,6 +34,11 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'accounts.apps.AccountsConfig',
     'bootstrap4',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +74,13 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
 
 WSGI_APPLICATION = 'myform.wsgi.application'
 
@@ -116,10 +128,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-# 모든 곳에서 request.session.modified = True 를 기본 값으로 사용하고 싶다면
-# 다음과 같이 설정
-SESSION_SAVE_EVERY_REQUEST = True
-
+# # 모든곳에서 request.session.modified = True 를 기본값으로 사요하고 싶다면
+# #다음과 같이 설정
+# SESSION_SAVE_EVERY_REQUEST = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -127,3 +138,8 @@ SESSION_SAVE_EVERY_REQUEST = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+SITE_ID = 1
+
+# LOGIN_REDIRECT_URL = '/articles/profile/'   # 기본값
+LOGIN_REDIRECT_URL = 'articles:index'
