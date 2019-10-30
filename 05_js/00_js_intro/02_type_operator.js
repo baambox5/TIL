@@ -40,5 +40,5 @@ console.log(happy, hacking)
 
 
 // Number.isNan() 함수는 값이 NaN인지 여부를 판별
-Number.isNaN(null)  // false
-Number.isNaN(undefined)  // false
+Number.isNaN(null) // false
+Number.isNaN(undefined) // false

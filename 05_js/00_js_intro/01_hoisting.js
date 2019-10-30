@@ -23,30 +23,30 @@
 
 // ex
 if (x != 1) {
-  console.log(y)  // undefined
+  console.log(y) // undefined
   var y = 3
   if (y === 3) {
     var x = 1
   }
-  console.log(y)  // 3
+  console.log(y) // 3
 }
 
 if (x === 1) {
-  console.log(y)  // 3
+  console.log(y) // 3
 }
 
 // JS 가 이해한 코드
 var x
 var y
 if (x !== 1) {
-  console.log(y)  // undefined
+  console.log(y) // undefined
   var y = 3
   if (y === 3) {
     var x = 1
   }
-  console.log(y)  // 3
+  console.log(y) // 3
 }
 
 if (x === 1) {
-  console.log(y)  // 3
+  console.log(y) // 3
 }

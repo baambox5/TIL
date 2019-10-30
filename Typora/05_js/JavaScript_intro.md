@@ -155,3 +155,107 @@ Babel 로 ES6+ 문법을 그보다 아래 버전의 JS로 변경해서 사용하
          console.log(last_name) // null - 의도적으로 값이 없음을 표현
          ```
 
+
+
+## 연산자
+
+- 'A' < 'B'
+
+  > true
+
+- 'Z' < 'a'
+
+  > true
+
+- const a = 1
+
+  > undefined
+
+  const b = '1'
+
+  > undefined
+
+  a == b
+
+  > true
+
+  a === b
+
+  > false
+
+  a === Number(b)
+
+  > true
+
+- 8 * null
+
+  > 0
+
+- '5' - 1
+
+  > 4
+
+- '5' + 1
+
+  > "51"
+
+- !true
+
+  > false
+
+- true ? 1 : 2 (콜론을 기준으로 물음표 앞의 boolean값이 참이면 1번 위치의 식을 실행)
+
+  > 1
+
+  false ? 1 : 2 (콜론을 기준으로 물음표 앞의 boolean값이 거짓이면 2번 위치의 식을 실행)
+
+  > 2
+
+  const result = Math.PI > 4 ? 'yes' : 'no'
+
+  > undefined
+
+  result
+
+  > "no"
+
+- const userName = prompt('Hello! who r u??')
+
+  > undefined
+
+  userName
+
+  > "harry"
+
+- document.write(message)
+
+  > undefined
+
+
+
+# Datastructure : Object와 Array
+
+## JSON(JS Object Notation, JS 객체 표기법)
+
+- KEY-VALUE 형태의 자료구조를 JS 객체와 유사한 모습으로 표현하는 표기법
+- 모습만 비슷할 뿐이고 실제로 Object처럼 사용하려면 다른 언어들처럼 JS에서도 Parsing(구문 분석) 작업이 필요하다.
+
+### 정리
+
+- Object : JS의 key-value 페어의 자료 구조
+- JSON : 데이터를 표현하기 위한 **단순한 문자열**, 트레일링 콤마는 사용 불가
+
+------------------
+
+## Helper Method
+
+- Helper란 자주 사용하는 로직을 재활용할 수 있게 만든 일종의 Library다.
+
+---------------------
+
+### callback
+
+- 인수로 다른 함수에 전달된 함수
+- 명시적으로 호출하는 방식이 아니라 **특정 이벤트가 발생했을 때** 시스템에 의해 호출되는 함수
+  - 다른 함수의 실행이 끝나고 난 뒤에 실행되는 함수. 이따가 너 실행 끝나면 그때 나 좀 호출해줘.
+- 함수 호출권한을 내가 아닌 시스템이 가진다.

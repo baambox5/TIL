@@ -5,10 +5,10 @@ let x = 1
 if (x === 1) {
   let x = 2
 
-  console.log(x)  // 2
+  console.log(x) // 2
 }
 
-console.log(x)  // 1
+console.log(x) // 1
 
 
 // const (상수)
@@ -44,7 +44,7 @@ function varTest() {
   var x = 1
   if (true) {
     var x = 2
-    console.log(x)  // 2, 상위 블록과 같은 변수
+    console.log(x) // 2, 상위 블록과 같은 변수
   }
   console.log(x)
 }
@@ -55,7 +55,7 @@ function letTest() {
   let x = 1
   if (true) {
     let x = 2
-    console.log(x)  // 2, 상위 블록과 다른 변수
+    console.log(x) // 2, 상위 블록과 다른 변수
   }
   console.log(x)
 }
