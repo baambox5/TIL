@@ -1,0 +1,46 @@
+{% extends 'articles/base.html' %}
+{% load make_link %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h1>DETAIL</h1>
+  <hr>
+  <p>{{ article.pk }}</p>
+  <p>{{ article.title }}</p>
+  <!--<p>{% autoescape off %}{{ article|hashtag_link }}{% endautoescape %}</p>-->
+  <p>{{ article|hashtag_link|safe }}</p>
+  <p>{{ article.created_at }}</p>
+  <p>{{ article.updated_at|date:"SHORT_DATE_FORMAT" }}</p>
+  <hr>  
+  {% for comment in comments %}
+    <hr>
+    <p><b>{{ comment.user }}</b> {{ comment.updated_at }}</p>
+    <p>{{ forloop.revcounter }}. {{ comment.content }}</p>
+    {% if request.user == comment.user %}
+      <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_button "Delete" button_type="submit" button_class="btn-warning" %}
+      </form>
+    {% endif %}
+  {% endfor %}
+  {% if user.is_authenticated %}
+    <hr>
+    <form action="{% url 'articles:comments' article.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      {% buttons submit='Submit' reset="Reset" %}{% endbuttons %}
+    </form>
+    <hr>
+  {% endif %}
+  <hr>
+  {% include 'articles/_follow.html' %}
+  <hr>
+  <a href="{% url 'articles:index' %}">[BACK]</a>
+  {% if request.user == article.user %}
+    <a href="{% url 'articles:update' article.pk %}" class="btn btn-success">[UPDATE]</a>
+    <form action="{% url 'articles:delete' article.pk %}" method="POST" class="d-inline">
+      {% csrf_token %}
+      {% bootstrap_button "Delete" button_type="submit" button_class="btn-danger" %}
+    </form>
+  {% endif %}
+{% endblock content %}
