@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .todo-list {
+      display: inline-block;
+      width: 33%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <div>
+      <select v-model="N">
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>    
+      <button @click="getNDogs">Get {{ N }} Dogs!</button>
+    </div>
+
+    <img v-for="image in images" v-bind:src="image" alt="img" v-if="image">
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    
+    const app = new Vue({
+      el: '#app',
+      data: {
+        images: [],
+        N: 1,
+      },
+      methods: {
+        getNDogs: function() {
+          const URL = `https://dog.ceo/api/breeds/image/random/${this.N}`
+          axios.get(URL)
+            .then(response => {
+              this.images = this.images.concat(response.data.message)
+          })
+        },
+      }
+    })
+  </script>
+</body>
+</html>
