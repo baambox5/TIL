@@ -1,5 +1,11 @@
 # vue_youtube
 
+### 설치
+
+> $ vue create youtube-browser
+
+> $ vue ui (플러그인 설치)
+
 ## 단방향 데이터 흐름의 이점
 
 1. vue app의 데이터 흐름을 쉽게 파악할 수 있음.
