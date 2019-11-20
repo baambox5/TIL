@@ -106,3 +106,9 @@
 
 - compare & pull request 누른다.
 - 만약 원본이 업데이트 됐다면, git pull로 갱신(위의 remote로 연결한 이유)(open source에는 굳이 필요 없음)
+  - git checkout master (branch master로 이동)
+  - git pull upstream master
+
+
+
+- 각자명칭, 변수명 주의!
